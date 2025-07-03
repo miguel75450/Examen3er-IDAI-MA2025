@@ -54,7 +54,7 @@ if (esDomicilio) {
 * Utiliza `document.getElementById('total').innerText` para mostrar el total en pantalla.
 * Formato sugerido: `Total: $XXX.00 MXN`
 
-### 5. Validación (opcional pero recomendable)
+### 5. Validación (opcional pero recomendable - (Puntos Extras))
 
 * Asegúrate de que la cantidad de hamburguesas sea mayor a 0.
 * Puedes mostrar un mensaje de error si algún campo está vacío o inválido.
@@ -69,14 +69,14 @@ if (esDomicilio) {
 
 ---
 
-## 💡 Sugerencias de Mejora
+## 💡 Sugerencias de Mejora (Puntos Extras)
 
 * Agrega estilos visuales a los botones y radios para que se vean más atractivos.
 * Puedes incluir imágenes representativas junto a cada tipo de especialidad o pan.
 
 ---
 
-## 📁 Archivos sugeridos en el repositorio
+## 📁 Archivos del repositorio
 
 * `index.html` → Página principal con el formulario.
 * `README.md` → Este archivo de instrucciones.
