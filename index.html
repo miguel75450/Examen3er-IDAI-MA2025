@@ -8,7 +8,7 @@
     body {
       font-family: Arial, sans-serif;
       margin: 20px;
-      background-color: #f6e3c5; /* Fondo suave */
+      background-color: #f6e3c5;
     }
     h1 {
       color: #b30000;
@@ -61,6 +61,18 @@
       margin-top: 20px;
       font-weight: bold;
     }
+    button {
+      margin-top: 15px;
+      padding: 10px 20px;
+      background-color: #b30000;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #800000;
+    }
   </style>
 </head>
 <body>
@@ -68,21 +80,23 @@
   <div class="container">
     <form id="pedidoForm">
       <label for="especialidad">Especialidad:</label>
-          <select id="especialidad" name="especialidad">
-              <option value="clasica">Clásica $80.00 MXN</option>
-              <option value="bbq">BBQ $100.00 MXN</option>
-              <option value="tocino">Con Tocino $120.00 MXN</option>
-              <option value="doble">Doble Carne $150.00 MXN</option>
-              <option value="hawaiana">Hawaiana $180.00 MXN</option>
-          </select>
+      <select id="especialidad" name="especialidad">
+        <option value="clasica">Clásica $80.00 MXN</option>
+        <option value="bbq">BBQ $100.00 MXN</option>
+        <option value="tocino">Con Tocino $120.00 MXN</option>
+        <option value="doble">Doble Carne $150.00 MXN</option>
+        <option value="hawaiana">Hawaiana $180.00 MXN</option>
+      </select>
+      
 
       <label for="pan">Tipo de Pan:</label>
-          <div class="radio-list">
-              <label for="clasico"><input type="radio">Clásico</label>
-              <label for="ajonjoli"><input type="radio">Con Ajonjolí (+20 MXN)</label>
-              <label for="integral"><input type="radio">Integral (+20 MXN)</label>
-              <label for="brioche"><input type="radio">Brioche (+50 MXN)</label>
-          </div>
+      <div class="radio-list">
+        <label><input type="radio" name="pan" value="0"> Clásico</label>
+        <label><input type="radio" name="pan" value="20"> Con Ajonjolí (+20 MXN)</label>
+        <label><input type="radio" name="pan" value="20"> Integral (+20 MXN)</label>
+
+        <label><input type="radio" name="pan" value="50"> Brioche (+50 MXN)</label>
+      </div>
 
       <label>Ingredientes adicionales (5.00 MXN c/u):</label>
       <div class="checkbox-list">
@@ -111,6 +125,7 @@
       <label for="cantidad">Cantidad de Hamburguesas:</label>
       <input type="number" id="cantidad" name="cantidad" min="1" value="1">
 
+
       <label>
         <input type="checkbox" id="domicilio" name="domicilio">
         ¿Es a domicilio? (+$30 MXN)
@@ -118,13 +133,52 @@
 
       <div class="total" id="total">Total: $0.00</div>
 
-      <button type="button">Calcular Total</button>
+      <button type="button" onclick="calcularTotal()">Calcular Total</button>
+
     </form>
+
     <div class="imagenes">
-      <img src="" alt="">
       <img src="img/hamburguesas-caseras-gourmet.png" alt="Hamburguesa 1">
       <img src="img/KFD_SpicyBBQBaconRanchBurger35382_WEB.avif" alt="Hamburguesa 2">
     </div>
   </div>
+
+  <script>
+    function calcularTotal() {
+      const especialidad = document.getElementById('especialidad').value;
+      let precioBase = 0;
+      switch (especialidad) {
+        case 'clasica': precioBase = 80; break;
+        case 'bbq': precioBase = 100; break;
+        case 'tocino': precioBase = 120; break;
+        case 'doble': precioBase = 150; break;
+        case 'hawaiana': precioBase = 180; break;
+      }
+
+      const panSeleccionado = document.querySelector('input[name="pan"]:checked');
+      const precioPan = panSeleccionado ? parseInt(panSeleccionado.value) : 0;
+
+      const ingredientes = document.querySelectorAll('input[type="checkbox"]:checked');
+      let numIngredientes = 0;
+      ingredientes.forEach(i => {
+        if (i.name !== "domicilio") numIngredientes++;
+      });
+
+      const cantidad = parseInt(document.getElementById('cantidad').value);
+      if (isNaN(cantidad) || cantidad <= 0) {
+        document.getElementById('total').innerText = "Por favor, ingresa una cantidad válida.";
+        return;
+      }
+
+      const esDomicilio = document.getElementById('domicilio').checked;
+
+      let total = (precioBase + precioPan + (numIngredientes * 5)) * cantidad;
+      if (esDomicilio) {
+        total += 30;
+      }
+
+      document.getElementById('total').innerText = `Total: $${total.toFixed(2)} MXN`;
+    }
+  </script>
 </body>
 </html>
